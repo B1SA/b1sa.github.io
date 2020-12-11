@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/B1SA/b1sa.github.io/issues"
   },
-  "homepage": "https://github.com/B1SA/b1sa.github.io#readme"
+  "homepage": "https://github.com/B1SA/b1sa.github.io#readme",
+  "dependencies": {
+    "@octokit/rest": "^18.0.12"
+  }
 }
