@@ -24,5 +24,21 @@ octokit.teams.listReposInOrg({
             publicRepos.push(item)
         }
     });
+    console.log("** PUBLIC REPOS **")
     console.log(publicRepos)
 });
+
+octokit.teams.listMembersInOrg({
+    org: process.env.GITHUB_ORG,
+    team_slug: process.env.GITHUB_TEAM,
+}).then(({ data }) => {  
+    var publicMembers = []
+    data.forEach(member => {
+        item = {avatar_url: member.avatar_url,
+                login: member.login,
+                html_url: member.html_url}
+        publicMembers.push(item)
+    })
+    console.log("** PUBLIC MEMBERS **")
+    console.log(publicMembers)
+})
