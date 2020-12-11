@@ -4,12 +4,19 @@ const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
 });
 
-octokit.teams.listReposInOrg({
+const repos = octokit.teams.listReposInOrg({
+    org: process.env.GITHUB_ORG,
+    team_slug: process.env.GITHUB_TEAM
+})
+
+const members = octokit.teams.listMembersInOrg({
     org: process.env.GITHUB_ORG,
     team_slug: process.env.GITHUB_TEAM,
-}).then(({ data }) => {  
+})
+
+Promise.all([repos, members]).then((values) => {
     var publicRepos = []
-    data.forEach(repo => {
+    values[0].data.forEach(repo => {
         if(!repo.private){
             item = {id: repo.id,
                     name: repo.name,
@@ -24,16 +31,9 @@ octokit.teams.listReposInOrg({
             publicRepos.push(item)
         }
     });
-    console.log("** PUBLIC REPOS **")
-    console.log(publicRepos)
-});
-
-octokit.teams.listMembersInOrg({
-    org: process.env.GITHUB_ORG,
-    team_slug: process.env.GITHUB_TEAM,
-}).then(({ data }) => {  
+    
     var publicMembers = []
-    data.forEach(member => {
+    values[1].data.forEach(member => {
         item = {avatar_url: member.avatar_url,
                 login: member.login,
                 html_url: member.html_url}
@@ -41,4 +41,7 @@ octokit.teams.listMembersInOrg({
     })
     console.log("** PUBLIC MEMBERS **")
     console.log(publicMembers)
-})
+    console.log("** PUBLIC REPOS **")
+    console.log(publicRepos)
+    console.log("all done!")
+});
