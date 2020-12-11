@@ -1,22 +1,27 @@
 const { Octokit } = require("@octokit/rest");
 const { Base64 } = require("js-base64")
 
+//Initialize ocktokit Client
 const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
 });
 
+//Promise to get all repos from Team in an Org
 const repos = octokit.teams.listReposInOrg({
     org: process.env.GITHUB_ORG,
     team_slug: process.env.GITHUB_TEAM
 })
 
+//Promise to get all members from Team in an Org
 const members = octokit.teams.listMembersInOrg({
     org: process.env.GITHUB_ORG,
     team_slug: process.env.GITHUB_TEAM,
 })
 
+//Call all promises
 Promise.all([repos, members]).then((values) => {
-    var publicRepos = []
+    
+    //Filter only public repos
     values[0].data.forEach(repo => {
         if(!repo.private){
             item = {id: repo.id,
@@ -33,6 +38,7 @@ Promise.all([repos, members]).then((values) => {
         }
     });
     
+    //Show only relevant member's data
     var publicMembers = []
     values[1].data.forEach(member => {
         item = {avatar_url: member.avatar_url,
@@ -45,9 +51,10 @@ Promise.all([repos, members]).then((values) => {
     console.log("** PUBLIC REPOS **")
     console.log(publicRepos)
 
+    //Encode both members + repos 
     const content = Base64.encode(JSON.stringify({members: publicMembers, repos: publicRepos}))
 
-
+    //Update file on github repo with encoded content
     octokit.repos.createOrUpdateFileContents({
         // replace the owner and email with your own details
         owner:  process.env.GITHUB_PAGE_OWNER,
