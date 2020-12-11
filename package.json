@@ -1,0 +1,19 @@
+{
+  "name": "b1sa.github.io",
+  "version": "1.0.0",
+  "description": "Github Page with B1SA repos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/B1SA/b1sa.github.io.git"
+  },
+  "author": "Ralphive",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/B1SA/b1sa.github.io/issues"
+  },
+  "homepage": "https://github.com/B1SA/b1sa.github.io#readme"
+}
