@@ -47,12 +47,14 @@ Promise.all([repos, members]).then((values) => {
 
     const content = Base64.encode(JSON.stringify({members: publicMembers, repos: publicRepos}))
 
+
     octokit.repos.createOrUpdateFileContents({
         // replace the owner and email with your own details
-        owner: process.env.GITHUB_PAGE_OWNER,
-        repo:  process.env.GITHUB_PAGE_REPO,
-        path: "data/data.json",
-        message: "Auto Refresh Repos and Members",
+        owner:  process.env.GITHUB_PAGE_OWNER,
+        repo:   process.env.GITHUB_PAGE_REPO,
+        sha:    process.env.GITHUB_SHA_DATA,
+        path:   "data/data.json",
+        message:"Auto Refresh Repos and Members",
         content: content,
         committer: {
         name: "Octokit Bot",
@@ -62,7 +64,7 @@ Promise.all([repos, members]).then((values) => {
         name: "Octokit Bot",
         email: "notvalid@email.com",
         },
-    }).then(date => {
+    }).then(data => {
         console.log(data)
         console.log("all done!")
     }).catch (err => {
