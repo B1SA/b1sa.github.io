@@ -1,5 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 const { Base64 } = require("js-base64")
+const sodium = require('tweetsodium'); 
 
 //Initialize ocktokit Client
 const octokit = new Octokit({
@@ -75,11 +76,38 @@ Promise.all([repos, members]).then((values) => {
         email: "notvalid@email.com",
         },
     }).then(data => {
-        console.log(data)
-        console.log("all done!")
+        octokit.actions.createOrUpdateRepoSecret({
+            owner:  process.env.GH_PAGE_OWNER,
+            repo:   process.env.GH_PAGE_REPO,
+            secret_name: "GH_SHA_DATA",
+            encrypted_value: encryptSecret(data.data.content.sha),
+            key_id: process.env.GH_ORG_KEY_ID
+
+        }).then(data =>{
+            console.log("New SHA Key updated")
+            console.log("all done!")    
+        }).catch(err => {
+            console.error("Error updating secret SHA")
+            console.error(err)
+        })
     }).catch (err => {
-        console.error(err)
+         console.error(err)
     }) 
 }).catch (err => {
     console.error(err)
 }) 
+
+function encryptSecret(value){
+    const key = process.env.GH_ORG_KEY;
+    // Convert the message and key to Uint8Array's (Buffer implements that interface)
+    const messageBytes = Buffer.from(value);
+    const keyBytes = Buffer.from(key, 'base64');
+    
+    // Encrypt using LibSodium.
+    const encryptedBytes = sodium.seal(messageBytes, keyBytes);
+
+    // Base64 the encrypted secret
+    const encrypted = Buffer.from(encryptedBytes).toString('base64');
+    
+    return encrypted
+}

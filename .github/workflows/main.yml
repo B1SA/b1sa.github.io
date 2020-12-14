@@ -28,4 +28,6 @@ jobs:
         GH_PAGE_OWNER: ${{secrets.GH_PAGE_OWNER}}
         GH_PAGE_REPO: ${{secrets.GH_PAGE_REPO}}
         GH_SHA_DATA: ${{secrets.GH_SHA_DATA}}
+        GH_ORG_KEY: ${{secrets.GH_ORG_KEY}}
+        GH_ORG_KEY_ID: ${{secrets.GH_ORG_KEY_ID}}
         
