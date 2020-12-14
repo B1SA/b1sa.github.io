@@ -9,9 +9,9 @@ function addRepos(repos){
         var myPanel = $('<div class="card">'
                         +   '<div class="card-block">'
                         +       '<div class="card-header">'
-                        +           '<span>'+repo.name+'</span>'
+                        +           '<a href="'+repo.html_url+'"><span>'+repo.name+'</span></a>'
                         +       '</div>'
-                        +      '<p>'+repo.description+'</p><img src="//placehold.it/50/eeeeee" class="rounded rounded-circle">'
+                        +      '<p>'+repo.description+'</p>'
                         +   '</div>'
                         +'</div>');
 
