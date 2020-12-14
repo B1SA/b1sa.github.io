@@ -23,6 +23,7 @@ const members = octokit.teams.listMembersInOrg({
 //Call all promises
 Promise.all([repos, members]).then((values) => {
     
+    var publicRepos = []
     //Filter only public repos
     values[0].data.forEach(repo => {
         if(!repo.private){
