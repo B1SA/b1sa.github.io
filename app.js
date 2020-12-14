@@ -7,12 +7,14 @@ const octokit = new Octokit({
 });
 
 //Promise to get all repos from Team in an Org
+console.log(`Retrieving repositories from Org ${process.env.GH_ORG}`)
 const repos = octokit.teams.listReposInOrg({
     org: process.env.GH_ORG,
     team_slug: process.env.GH_TEAM
 })
 
 //Promise to get all members from Team in an Org
+console.log(`Retrieving Members from Org ${process.env.GH_ORG}`)
 const members = octokit.teams.listMembersInOrg({
     org: process.env.GH_ORG,
     team_slug: process.env.GH_TEAM,
@@ -77,4 +79,6 @@ Promise.all([repos, members]).then((values) => {
     }).catch (err => {
         console.error(err)
     }) 
-});
+}).catch (err => {
+    console.error(err)
+}) 
