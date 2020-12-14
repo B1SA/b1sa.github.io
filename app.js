@@ -3,19 +3,19 @@ const { Base64 } = require("js-base64")
 
 //Initialize ocktokit Client
 const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
+    auth: process.env.GH_TOKEN,
 });
 
 //Promise to get all repos from Team in an Org
 const repos = octokit.teams.listReposInOrg({
-    org: process.env.GITHUB_ORG,
-    team_slug: process.env.GITHUB_TEAM
+    org: process.env.GH_ORG,
+    team_slug: process.env.GH_TEAM
 })
 
 //Promise to get all members from Team in an Org
 const members = octokit.teams.listMembersInOrg({
-    org: process.env.GITHUB_ORG,
-    team_slug: process.env.GITHUB_TEAM,
+    org: process.env.GH_ORG,
+    team_slug: process.env.GH_TEAM,
 })
 
 //Call all promises
@@ -57,9 +57,9 @@ Promise.all([repos, members]).then((values) => {
     //Update file on github repo with encoded content
     octokit.repos.createOrUpdateFileContents({
         // replace the owner and email with your own details
-        owner:  process.env.GITHUB_PAGE_OWNER,
-        repo:   process.env.GITHUB_PAGE_REPO,
-        sha:    process.env.GITHUB_SHA_DATA,
+        owner:  process.env.GH_PAGE_OWNER,
+        repo:   process.env.GH_PAGE_REPO,
+        sha:    process.env.GH_SHA_DATA,
         path:   "data/data.json",
         message:"Auto Refresh Repos and Members",
         content: content,
