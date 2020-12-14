@@ -1,9 +1,8 @@
 $.getJSON("./data/data.json", function(data) {
     addRepos(data.repos)
-});
+    addMembers(data.members)
 
-addRepos(data.repos)
-addMembers(data.members)
+});
 
 function addRepos(repos){
     
