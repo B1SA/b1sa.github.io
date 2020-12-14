@@ -1,5 +1,5 @@
-$.getJSON("./data/data.json", function(json) {
-    addRepos(JSON.repos)
+$.getJSON("./data/data.json", function(data) {
+    addRepos(data.repos)
 });
 
 function addRepos(repos){
