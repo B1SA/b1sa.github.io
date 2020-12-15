@@ -14,6 +14,9 @@
   margin-right: auto;
 }
 
+.p-card{
+  padding: .75rem 1rem;
+}
 
 .bg-dark {
   background-color: #151515 !important;
