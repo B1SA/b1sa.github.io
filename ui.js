@@ -13,7 +13,7 @@ function addRepos(repos){
                         +       '<div class="card-header">'
                         +           '<a href="'+repo.html_url+'"><span>'+repo.name+'</span></a>'
                         +       '</div>'
-                        +      '<p class"p-card">'+repo.description+'</p>'
+                        +      '<p class="p-card">'+repo.description+'</p>'
                         +   '</div>'
                         +'</div>');
 
